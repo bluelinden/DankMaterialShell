@@ -596,6 +596,7 @@ Item {
 
     PamContext {
         id: pam
+        config: "DankMaterialShell"
 
         onResponseRequiredChanged: {
             if (demoMode) return
