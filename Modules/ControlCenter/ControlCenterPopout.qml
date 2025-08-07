@@ -49,7 +49,7 @@ PanelWindow {
     implicitHeight: 500
     WlrLayershell.layer: WlrLayershell.Overlay
     WlrLayershell.exclusiveZone: -1
-    WlrLayershell.keyboardFocus: controlCenterVisible ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.None
+    WlrLayershell.keyboardFocus: controlCenterVisible ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
     color: "transparent"
 
     anchors {
@@ -125,6 +125,8 @@ PanelWindow {
                 if (event.key === Qt.Key_Escape) {
                     controlCenterVisible = false;
                     event.accepted = true;
+                } else {
+                    event.accepted = false;
                 }
             }
 
@@ -711,7 +713,7 @@ PanelWindow {
                             interval: BrightnessService.ddcAvailable ? 500 : 50
                             repeat: false
                             onTriggered: {
-                                BrightnessService.setBrightness(pendingValue);
+                                BrightnessService.setBrightnessInternal(pendingValue);
                             }
                         }
 
@@ -745,7 +747,7 @@ PanelWindow {
                                 }
                                 onSliderDragFinished: function(finalValue) {
                                     parent.parent.brightnessDebounceTimer.stop();
-                                    BrightnessService.setBrightness(finalValue);
+                                    BrightnessService.setBrightnessInternal(finalValue);
                                 }
                             }
 
