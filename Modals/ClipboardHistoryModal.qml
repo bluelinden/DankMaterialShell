@@ -11,7 +11,6 @@ DankModal {
 
     id: clipboardHistoryModal
 
-    property bool isVisible: false
     property int totalCount: 0
     property var activeTheme: Theme
     property bool showClearConfirmation: false
@@ -39,21 +38,21 @@ DankModal {
     }
 
     function toggle() {
-        if (isVisible)
+        if (visible)
             hide();
         else
             show();
     }
 
     function show() {
-        clipboardHistoryModal.isVisible = true;
+        clipboardHistoryModal.visible = true;
         initializeThumbnailSystem();
         refreshClipboard();
         
     }
 
     function hide() {
-        clipboardHistoryModal.isVisible = false;
+        clipboardHistoryModal.visible = false;
         clipboardHistoryModal.searchText = "";
         cleanupTempFiles();
     }
@@ -123,7 +122,7 @@ DankModal {
     }
 
 
-    visible: isVisible
+    visible: false
     width: 650
     height: 550
     keyboardFocus: "ondemand"
@@ -439,10 +438,10 @@ DankModal {
                     model: filteredClipboardModel
                     spacing: Theme.spacingXS
                     
-                    // Enhanced native kinetic scrolling - faster for both touchpad and mouse
+                    // Qt 6.9+ scrolling: flickDeceleration/maximumFlickVelocity only affect touch now
                     interactive: true
-                    flickDeceleration: 1000      // Lower = more momentum, longer scrolling
-                    maximumFlickVelocity: 8000   // Higher = faster maximum scroll speed
+                    flickDeceleration: 1500  // Touch only in Qt 6.9+      // Lower = more momentum, longer scrolling
+                    maximumFlickVelocity: 2000  // Touch only in Qt 6.9+   // Higher = faster maximum scroll speed
                     boundsBehavior: Flickable.DragAndOvershootBounds
                     boundsMovement: Flickable.FollowBoundsBehavior
                     pressDelay: 0
